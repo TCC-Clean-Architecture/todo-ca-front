@@ -1,7 +1,0 @@
-@use 'abstracts' as *;
-
-body {
-  background-color: var(--clr-bg);
-
-  @include default-scrollbar;
-}
