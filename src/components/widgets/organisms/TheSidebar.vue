@@ -1,11 +1,11 @@
 <template>
-	<div class="sidebar" :class="{ 'sidebar--collapsed': collapsed }">
+	<div class="sidebar" :class="{ 'sidebar--collapsed': layout.collapsed }">
 		<button class="sidebar__button-collapse" @click="onCollapseMenu()">
 			<IconAngles />
 		</button>
 		<div class="sidebar__wrapper">
 			<i class="sidebar__logo">
-				<LogoCollapsed2DO4U v-if="collapsed" />
+				<LogoCollapsed2DO4U v-if="layout.collapsed" />
 				<Logo2DO4U v-else />
 			</i>
 			<BaseDivider theme="primary" />
@@ -17,7 +17,7 @@
 				activeClass="sidebar__link--active"
 			>
 				<i class="link__icon"><IconHome /></i>
-				<span v-show="!collapsed">{{ routesNames.home }}</span>
+				<span v-show="!layout.collapsed">{{ routesNames.home }}</span>
 			</RouterLink>
 		</nav>
 		<div class="sidebar__misc">
@@ -34,7 +34,7 @@ import IconHome from '@/components/icons/IconHome.vue';
 import BaseDivider from '@/components/widgets/atoms/BaseDivider.vue';
 import SwitchColorTheme from '@/components/widgets/atoms/SwitchColorTheme.vue';
 
-import { inject, computed } from 'vue';
+import { inject } from 'vue';
 import { useRoutesNames } from '@/plugins/core';
 import { LAYOUT_CONFIG_KEY } from '@/constants/injectionKeys';
 
@@ -52,16 +52,12 @@ const emit = defineEmits<{
 	(e: 'collapse-menu'): void;
 }>();
 
-/* -- Computeds -- */
-
-const collapsed = computed(() => layout.collapsed);
-
 /* -- Methods -- */
 
-function onCollapseMenu() {
+const onCollapseMenu = () => {
 	emit('collapse-menu');
 	layout.toggleCollapse();
-}
+};
 </script>
 
 <style lang="scss" scoped>
