@@ -16,20 +16,6 @@ import TheSidebar from '@/components/widgets/organisms/TheSidebar.vue';
 </script>
 
 <style lang="scss" scoped>
-.sidebar {
-	position: relative;
-
-	display: flex;
-	flex-direction: column;
-
-	height: 100%;
-	padding-block: 1.5rem;
-
-	background-color: var(--clr-bg-soft);
-
-	border-radius: 0.25rem;
-}
-
 .header {
 	&__title {
 		color: var(--clr-dark);
