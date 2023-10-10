@@ -22,7 +22,7 @@ import { useRoutesNames } from './plugins/routesNames';
 const routesNames = useRoutesNames();
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
 	line-height: 1.5;
 	max-height: 100vh;
