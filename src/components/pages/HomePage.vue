@@ -5,13 +5,14 @@
 		</div>
 		<section class="dashboard"></section>
 		<template #sidebar>
-			<div class="sidebar"></div>
+			<TheSidebar />
 		</template>
 	</DashboardLayout>
 </template>
 
 <script lang="ts" setup>
 import DashboardLayout from '@/layouts/DashboardLayout.vue';
+import TheSidebar from '@/components/widgets/organisms/TheSidebar.vue';
 </script>
 
 <style lang="scss" scoped>

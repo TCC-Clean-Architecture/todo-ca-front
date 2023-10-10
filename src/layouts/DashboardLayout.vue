@@ -14,13 +14,16 @@
 
 <script lang="ts" setup>
 import { provide, readonly } from 'vue';
-import { useToggle, useSessionStorage } from '@vueuse/core';
+import { reactiveComputed, useToggle, useSessionStorage } from '@vueuse/core';
 import { LAYOUT_CONFIG_KEY } from '@/constants/injectionKeys';
 
 const collapsed = useSessionStorage('sidebar-collapse', false);
 const toggleCollapse = useToggle(collapsed);
 
-const provideOptions = { collapsed: readonly(collapsed), toggleCollapse };
+const provideOptions = reactiveComputed(() => ({
+	collapsed: readonly(collapsed).value,
+	toggleCollapse,
+}));
 
 provide(LAYOUT_CONFIG_KEY, provideOptions);
 </script>

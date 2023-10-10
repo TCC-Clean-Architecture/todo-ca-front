@@ -1,6 +1,4 @@
-import { type Ref } from 'vue';
-
 export interface IDashboardLayoutOptions {
-	collapsed: Readonly<Ref<boolean>>;
+	collapsed: boolean;
 	toggleCollapse: (value?: boolean | undefined) => boolean;
 }

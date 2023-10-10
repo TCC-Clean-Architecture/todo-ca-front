@@ -1,1 +1,1 @@
-export * from './routesNames';
+export { useRoutesNames } from './routesNames';
