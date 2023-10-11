@@ -12,7 +12,7 @@
 		</div>
 		<nav class="sidebar__navigation">
 			<RouterLink
-				:to="() => routesNames.home"
+				:to="{ name: routesNames.home }"
 				class="sidebar__link"
 				activeClass="sidebar__link--active"
 			>
