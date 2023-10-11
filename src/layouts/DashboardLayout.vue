@@ -30,12 +30,9 @@ provide(LAYOUT_CONFIG_KEY, provideOptions);
 
 <style lang="scss" scoped>
 .layout-dashboard {
-	$layout-gap: 0.625rem;
-
 	position: relative;
 
 	display: grid;
-	gap: $layout-gap;
 
 	transition: all 300ms ease-in-out;
 
