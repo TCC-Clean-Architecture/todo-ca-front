@@ -112,6 +112,8 @@ const onClick = (e: Event) => {
 
 <style lang="scss" scoped>
 button.icon {
+	cursor: pointer;
+
 	svg {
 		transition: scale 150ms ease-in-out;
 
@@ -129,9 +131,9 @@ button.icon {
 
 	height: 2rem;
 	width: 2rem;
+	cursor: inherit;
 
 	border-radius: 100vw;
-	cursor: pointer;
 
 	transition: color 100ms ease;
 
@@ -144,9 +146,9 @@ button.icon {
 
 	$sizes: (
 		'xs': 0.875rem,
-		'sm': 1.125rem,
-		'md': 1.25rem,
-		'lg': 1.5rem,
+		'sm': 1.25rem,
+		'md': 1.5rem,
+		'lg': 1.75rem,
 		'xl': 2rem,
 	);
 

@@ -20,10 +20,8 @@
     background-color: $hover-clr-2;
   }
 
-  &:active,
-  &#{$self}--active {
+  &:active {
     color: $active-clr;
-    box-shadow: $elevation-inset-2;
   }
 
   &:disabled,
@@ -54,11 +52,9 @@
     background-color: $hover-clr-2;
   }
 
-  &:active,
-  &#{$self}--active {
+  &:active {
     color: $active-clr-1;
     background-color: $active-clr-2;
-    box-shadow: $elevation-inset-2;
 
     &:hover {
       background-color: get-theme-color($theme, 'dark');
@@ -74,12 +70,12 @@
 
 // Define flat variant mixin
 @mixin flat-button($theme, $self: '.button') {
-  $clr-1: $c-gray-30;
-  $clr-2: $c-lighter;
-  $hover-clr-1: $clr-1;
-  $hover-clr-2: $c-gray-80;
-  $active-clr-1: get-theme-color($theme, 'main');
-  $active-clr-2: $clr-2;
+  $clr-1: get-theme-color($theme, 'main');
+  $clr-2: var(--clr-bg-soft-up);
+  $hover-clr-1: get-theme-color($theme, 'dark');
+  $hover-clr-2: get-theme-color($theme, 'lightest');
+  $active-clr-1: $clr-1;
+  $active-clr-2: get-theme-color($theme, 'lighter');
   $disabled-clr-1: var(--clr-mute-dark);
   $disabled-clr-2: var(--clr-mute);
 
@@ -91,11 +87,9 @@
     background-color: $hover-clr-2;
   }
 
-  &:active,
-  &#{$self}--active {
+  &:active {
     color: $active-clr-1;
     background-color: $active-clr-2;
-    box-shadow: $elevation-inset-2;
   }
 
   &:disabled,
@@ -124,8 +118,7 @@
     background-color: $hover-clr-2;
   }
 
-  &:active,
-  &#{$self}--active {
+  &:active {
     color: $active-clr-1;
     background-color: $active-clr-2;
   }
@@ -151,10 +144,8 @@
     color: $hover-clr;
   }
 
-  &:active,
-  &#{$self}--active {
+  &:active {
     color: $active-clr;
-    box-shadow: unset;
   }
 
   &:disabled,

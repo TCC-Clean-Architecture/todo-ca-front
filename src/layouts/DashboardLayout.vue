@@ -38,9 +38,10 @@ provide(LAYOUT_CONFIG_KEY, provideOptions);
 
 	&__sidebar {
 		position: sticky;
-		height: 100vh;
-
+		top: 0;
 		z-index: 10;
+
+		height: 100vh;
 	}
 }
 </style>

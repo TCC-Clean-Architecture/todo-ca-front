@@ -63,7 +63,16 @@ interface Icon {
 	props?: object;
 }
 
-type Themes = 'plain' | 'text' | 'outline' | 'flat';
+type Themes =
+	| 'primary'
+	| 'secondary'
+	| 'success'
+	| 'danger'
+	| 'warning'
+	| 'info'
+	| 'loving'
+	| 'gray';
+
 type Variants = 'plain' | 'text' | 'outline' | 'flat';
 type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -152,7 +161,7 @@ function onClick(e: Event) {
 	font-weight: 500;
 	text-align: center;
 
-	border-radius: 6px;
+	border-radius: 0.5rem;
 	cursor: pointer;
 
 	transition:
@@ -168,6 +177,8 @@ function onClick(e: Event) {
 	}
 
 	&__icon {
+		transition: scale 150ms ease-in-out;
+
 		color: inherit;
 	}
 

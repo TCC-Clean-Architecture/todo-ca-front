@@ -11,6 +11,10 @@ import BaseBreadcumbs from '@/components/widgets/molecules/BaseBreadcumbs.vue';
 
 <style lang="scss" scoped>
 .header {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
 	margin: 1.5rem;
 
 	&__title {
