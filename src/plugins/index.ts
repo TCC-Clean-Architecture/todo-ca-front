@@ -1,6 +1,7 @@
 import { routesNamesPlugin } from './routesNames';
+import { modalPlugin } from './modal';
 
-export { routesNamesPlugin };
+export { routesNamesPlugin, modalPlugin };
 
-const plugins = [routesNamesPlugin];
+const plugins = [routesNamesPlugin, modalPlugin];
 export default plugins;

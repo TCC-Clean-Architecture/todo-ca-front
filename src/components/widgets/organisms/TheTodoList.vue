@@ -15,18 +15,35 @@
 				</li>
 			</template>
 			<template #footer>
-				<BaseButton icon="plus" size="lg" theme="secondary" variant="flat" block />
+				<BaseButton
+					icon="plus"
+					size="lg"
+					theme="secondary"
+					variant="flat"
+					block
+					@click="openModal()"
+				/>
 			</template>
 		</Draggable>
 	</section>
+	<NewEditTaskModal id="um-id" />
 </template>
 
 <script lang="ts" setup>
 import TodoItem from '@/components/widgets/molecules/TodoItem.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
+import NewEditTaskModal from '@/components/modals/NewEditTaskModal.vue';
 import Draggable from 'vuedraggable';
 
 import { ref } from 'vue';
+import { useModal } from '@/plugins/core';
+import { NEW_EDIT_TASK_KEY } from '@/constants/modalKeys';
+
+const modal = useModal();
+
+const openModal = () => {
+	modal.show(NEW_EDIT_TASK_KEY);
+};
 
 type ITodo = {
 	id: string;
@@ -99,3 +116,4 @@ const tasks = ref<ITodo[]>([
 	}
 }
 </style>
+@/constants/modalKeys
