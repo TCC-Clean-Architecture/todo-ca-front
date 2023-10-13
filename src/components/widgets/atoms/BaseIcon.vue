@@ -57,7 +57,7 @@ const emit = defineEmits<{
 
 const iconsList = computed(() => {
 	// import context for the icons folder and return an array with the names of the .vue files
-	const icons: any = import.meta.glob('/src/components/icons/Icon*.vue', {
+	const icons = import.meta.glob('/src/components/icons/**/*.vue', {
 		import: 'default',
 		eager: true,
 	});
