@@ -1,3 +1,1 @@
-import { type IDashboardLayoutOptions } from './dashboardLayout';
-
-export type { IDashboardLayoutOptions };
+export * from './dashboardLayout';
