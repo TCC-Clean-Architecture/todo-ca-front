@@ -1,10 +1,12 @@
 <template>
-	<BaseModal :name="NEW_EDIT_TASK_KEY" v-model="modalStatus" class="new-task-modal">
+	<BaseModal :name="NEW_TASK_KEY" class="new-task-modal">
 		<template #title>
-			<h2 class="new-task-modal__title" v-text="componentInfo.title"></h2>
+			<h2 class="new-task-modal__title">Criar novo a fazer</h2>
 		</template>
 		<div class="new-task-modal__content">
-			<p class="new-task-modal__description" v-text="componentInfo.description"></p>
+			<p class="new-task-modal__description">
+				Preencha os campos para criar um novo elemento na lista
+			</p>
 			<form class="new-task-modal__form" @submit.prevent>
 				<div class="field">
 					<label
@@ -25,8 +27,8 @@
 					></textarea>
 				</div>
 				<div class="new-task-modal__actions">
-					<button class="new-task-modal__create" v-text="componentInfo.button"></button>
-					<button class="new-task-modal__cancel" @click="modalStatus = false">Cancelar</button>
+					<BaseButton theme="secondary" pill>Criar</BaseButton>
+					<BaseButton theme="gray" variant="text" pill @click="close()">Cancelar</BaseButton>
 				</div>
 			</form>
 		</div>
@@ -35,18 +37,15 @@
 
 <script lang="ts" setup>
 import BaseModal from '@/components/widgets/molecules/BaseModal.vue';
+import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
-import { ref, reactive, computed } from 'vue';
-import { NEW_EDIT_TASK_KEY } from '@/constants/modalKeys';
+import { reactive } from 'vue';
+import { useModals } from '@/plugins/core';
+import { NEW_TASK_KEY } from '@/constants/modalKeys';
 
-const modalStatus = ref<boolean>(false);
+const modals = useModals();
 
-interface IProps {
-	callback?: () => void;
-	id?: string;
-}
-
-const props = defineProps<IProps>();
+/* -- Props -- */
 
 interface IForm {
 	description: string | undefined;
@@ -56,20 +55,9 @@ const form: IForm = reactive({
 	description: undefined,
 });
 
-const componentInfo = computed(() => {
-	if (props.id) {
-		return {
-			title: 'Editar a fazer',
-			description: 'Atualize os campos do seguinte item',
-			button: 'Salvar',
-		};
-	}
-	return {
-		title: 'Criar novo a fazer',
-		description: 'Preencha os campos para criar um novo elemento na lista',
-		button: 'Criar',
-	};
-});
+/* -- Methods -- */
+
+const close = () => modals.hide(NEW_TASK_KEY);
 </script>
 
 <style lang="scss" scoped>
@@ -103,35 +91,6 @@ const componentInfo = computed(() => {
 		gap: 0.5rem;
 
 		padding-block: 2rem;
-	}
-
-	&__create {
-		height: 40px;
-		min-width: 120px;
-		padding-inline: 1.5rem;
-		color: var(--clr-text-inverse-1);
-		background-color: var(--clr-secondary);
-		border-radius: 100vw;
-
-		transition: background-color 200ms ease-in-out;
-
-		&:hover {
-			background-color: var(--clr-secondary-dark);
-		}
-	}
-
-	&__cancel {
-		height: 40px;
-		min-width: 120px;
-		padding-inline: 1.5rem;
-		color: var(--clr-text-1);
-		border-radius: 100vw;
-
-		transition: background-color 200ms ease-in-out;
-
-		&:hover {
-			background-color: var(--clr-gray-lightest);
-		}
 	}
 }
 
@@ -179,4 +138,3 @@ const componentInfo = computed(() => {
 	}
 }
 </style>
-@/constants/modalKeys
