@@ -16,7 +16,7 @@
 		</transition>
 
 		<slot>
-			<component v-if="iconComponent" :is="iconComponent" v-bind="props" />
+			<component v-if="iconComponent" :is="iconComponent" v-bind="props.props" />
 		</slot>
 	</component>
 </template>
