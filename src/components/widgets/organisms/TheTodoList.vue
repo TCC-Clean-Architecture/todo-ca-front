@@ -21,29 +21,27 @@
 					theme="secondary"
 					variant="flat"
 					block
-					@click="openModal()"
+					@click="openNewTaskModal()"
 				/>
 			</template>
 		</Draggable>
 	</section>
-	<NewEditTaskModal id="um-id" />
+	<NewTaskModal />
 </template>
 
 <script lang="ts" setup>
 import TodoItem from '@/components/widgets/molecules/TodoItem.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
-import NewEditTaskModal from '@/components/modals/NewEditTaskModal.vue';
+import NewTaskModal from '@/components/modals/NewTaskModal.vue';
 import Draggable from 'vuedraggable';
 
 import { ref } from 'vue';
-import { useModal } from '@/plugins/core';
-import { NEW_EDIT_TASK_KEY } from '@/constants/modalKeys';
+import { useModals } from '@/plugins/core';
+import { NEW_TASK_KEY } from '@/constants/modalKeys';
 
-const modal = useModal();
+const modals = useModals();
 
-const openModal = () => {
-	modal.show(NEW_EDIT_TASK_KEY);
-};
+const openNewTaskModal = () => modals.show(NEW_TASK_KEY);
 
 type ITodo = {
 	id: string;
@@ -116,4 +114,3 @@ const tasks = ref<ITodo[]>([
 	}
 }
 </style>
-@/constants/modalKeys
