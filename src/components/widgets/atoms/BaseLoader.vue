@@ -20,11 +20,12 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import type { LoaderThemes } from '@/interfaces';
 
 /* -- Props -- */
 
 interface Props {
-	theme?: string;
+	theme?: LoaderThemes;
 	center?: boolean;
 	fixed?: boolean;
 	floating?: boolean;
@@ -85,18 +86,20 @@ const themeClass = computed(() => {
 		animation: spin 600ms linear infinite;
 	}
 
-	&.variant--primary #{$self}__spinner {
-		border-color: var(--clr-primary);
+	@each $theme, $properties in $themes {
+		&.theme--#{$theme} {
+			border-color: #{get-theme-color($theme, 'main')};
+			border-bottom-color: transparent;
+		}
+	}
+
+	&.theme--dark {
+		border-color: var(--clr-dark);
 		border-bottom-color: transparent;
 	}
 
-	&.variant--secondary #{$self}__spinner {
-		border-color: var(--clr-secondary);
-		border-bottom-color: transparent;
-	}
-
-	&.variant--white #{$self}__spinner {
-		border-color: $c-white;
+	&.theme--light {
+		border-color: var(--clr-light);
 		border-bottom-color: transparent;
 	}
 }

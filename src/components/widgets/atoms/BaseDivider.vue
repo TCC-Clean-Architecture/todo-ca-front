@@ -11,21 +11,23 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import type { DividerThemes } from '@/interfaces';
 
 /* -- Props -- */
 
-interface Props {
-	theme?: 'light' | 'primary' | 'secondary';
+interface IProps {
+	theme?: DividerThemes;
 	vertical?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<IProps>(), {
+	theme: 'dark',
 	vertical: false,
 });
 
 const themeClass = computed(() => {
-	if (!props.theme) return 'divider--light';
-	return `divider--${props.theme}`;
+	if (!props.theme) return 'theme--dark';
+	return `theme--${props.theme}`;
 });
 
 const orientationClass = computed(() => {
@@ -66,18 +68,20 @@ const orientationClass = computed(() => {
 		border-width: 0 thin 0 0;
 	}
 
-	&--primary {
-		border-color: var(--clr-primary);
-		opacity: 0.2;
+	@each $theme, $properties in $themes {
+		&.theme--#{$theme} {
+			border-color: #{get-theme-color($theme, 'main')};
+			opacity: 0.2;
+		}
 	}
 
-	&--secondary {
-		border-color: var(--clr-secondary);
-		opacity: 0.2;
-	}
-
-	&--light {
+	&.theme--dark {
 		border-color: var(--clr-dark);
+		opacity: 0.2;
+	}
+
+	&.theme--light {
+		border-color: var(--clr-light);
 		opacity: 0.2;
 	}
 }

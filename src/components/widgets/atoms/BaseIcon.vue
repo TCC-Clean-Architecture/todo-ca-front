@@ -25,23 +25,22 @@
 import BaseLoader from '@/components/widgets/atoms/BaseLoader.vue';
 
 import { computed } from 'vue';
-
-type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+import type { IconTags, IconThemes, IconSizes } from '@/interfaces';
 
 /* -- Props -- */
 
-interface Props {
-	tag?: 'div' | 'span' | 'i' | 'button';
+interface IProps {
+	tag?: IconTags;
 	id?: string | number;
 	icon?: string;
-	theme?: string;
-	size?: Sizes;
+	theme?: IconThemes;
+	size?: IconSizes;
 	props?: object;
 	loading?: boolean;
 	disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<IProps>(), {
 	tag: 'i',
 	size: 'md',
 	loading: false,

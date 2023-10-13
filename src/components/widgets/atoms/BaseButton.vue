@@ -55,35 +55,18 @@ import BaseIcon from '@/components/widgets/atoms/BaseIcon.vue';
 import BaseLoader from '@/components/widgets/atoms/BaseLoader.vue';
 
 import { computed } from 'vue';
+import type { ButtonIcon, ButtonThemes, ButtonVariants, ButtonSizes } from '@/interfaces';
 
 /* -- Props -- */
 
-interface Icon {
-	icon: string;
-	props?: object;
-}
-
-type Themes =
-	| 'primary'
-	| 'secondary'
-	| 'success'
-	| 'danger'
-	| 'warning'
-	| 'info'
-	| 'loving'
-	| 'gray';
-
-type Variants = 'plain' | 'text' | 'outline' | 'flat';
-type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
-interface Props {
+interface IProps {
 	tag?: string;
-	theme?: Themes;
-	variant?: Variants;
-	icon?: string | Icon;
-	prependIcon?: string | Icon;
-	appendIcon?: string | Icon;
-	size?: Sizes;
+	theme?: ButtonThemes;
+	variant?: ButtonVariants;
+	icon?: string | ButtonIcon;
+	prependIcon?: string | ButtonIcon;
+	appendIcon?: string | ButtonIcon;
+	size?: ButtonSizes;
 	props?: object;
 	file?: boolean;
 	block?: boolean;
@@ -93,7 +76,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<IProps>(), {
 	tag: 'button',
 	size: 'md',
 	block: false,
@@ -142,10 +125,10 @@ const loaderTheme = computed(() => {
 
 /* -- Methods -- */
 
-function onClick(e: Event) {
+const onClick = (e: Event) => {
 	if (props.disabled || props.loading) return;
 	emit('click', e);
-}
+};
 </script>
 
 <style lang="scss" scoped>
