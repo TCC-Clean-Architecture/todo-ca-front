@@ -1,16 +1,24 @@
 <template>
 	<Teleport to="#modals">
 		<Transition name="modal-fade">
-			<dialog class="modal" :class="$attrs.class" v-if="show">
+			<dialog class="modal" :class="$attrs.class" v-if="status">
 				<div class="modal__backdrop"></div>
-				<div class="modal__card" :style="{ width: width }">
+
+				<div class="modal__card" :style="{ '--modal-width': width }">
 					<slot name="header">
 						<div class="modal__header">
 							<slot name="title">
 								<h2 v-if="title" class="modal__title" v-text="title"></h2>
 							</slot>
 							<slot name="close-button">
-								<button class="modal__close" @click="show = false"><IconXMark /></button>
+								<BaseButton
+									class="modal__close"
+									icon="x-mark"
+									size="sm"
+									theme="secondary"
+									variant="flat"
+									@click="close()"
+								/>
 							</slot>
 						</div>
 					</slot>
@@ -27,17 +35,26 @@
 </template>
 
 <script lang="ts" setup>
-import IconXMark from '@/components/icons/IconXMark.vue';
+import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
-import { ref, watch } from 'vue';
-import { useVModel, syncRef, useEventBus, type EventBusKey } from '@vueuse/core';
+import { watchEffect } from 'vue';
+import { syncRef, useVModel } from '@vueuse/core';
+import { useModalsState } from '@/composables/modalsState';
+import { useModal } from '@/composables/modal';
+import type { ModalKey } from '@/interfaces';
 
 defineOptions({
 	inheritAttrs: false,
 });
 
+/* -- Plugins -- */
+
+const modalsState = useModalsState();
+
+/* -- Props -- */
+
 interface IProps {
-	name: EventBusKey<{ event: 'hide' | 'show'; props?: unknown }>;
+	name: ModalKey;
 	modelValue?: boolean;
 	width?: string;
 	title?: string;
@@ -45,7 +62,10 @@ interface IProps {
 
 const props = withDefaults(defineProps<IProps>(), {
 	width: '500px',
+	modelValue: false,
 });
+
+/* -- Emits -- */
 
 const emit = defineEmits<{
 	(e: 'update:modelValue', value: boolean): void;
@@ -53,30 +73,17 @@ const emit = defineEmits<{
 	(e: 'close'): void;
 }>();
 
-const show = ref<boolean>(false);
-const modelShow = useVModel(props, 'modelValue', emit);
+/* -- Composables -- */
 
-syncRef(show, modelShow);
+const { status, close } = useModal(props.name, modalsState);
+const modelStatus = useVModel(props, 'modelValue', emit);
+syncRef(modelStatus, status);
 
-watch(
-	show,
-	async (bool) => {
-		if (bool) emit('open');
-		else emit('close');
-	},
-	{ immediate: true },
-);
+/* -- Watch -- */
 
-const modalBus = useEventBus(props.name);
-
-modalBus.on((e) => {
-	if (e.event === 'hide') {
-		show.value = false;
-	}
-
-	if (e.event === 'show') {
-		show.value = true;
-	}
+watchEffect(() => {
+	if (status) emit('open');
+	else emit('close');
 });
 </script>
 
@@ -108,6 +115,7 @@ modalBus.on((e) => {
 	&__card {
 		display: flex;
 		flex-direction: column;
+		width: var(--modal-width, 500px);
 
 		background-color: var(--clr-bg-soft);
 		border-radius: 1rem;
@@ -122,31 +130,6 @@ modalBus.on((e) => {
 
 	&__close {
 		margin-inline-start: auto;
-		width: 1.75rem;
-		height: 1.75rem;
-		padding: 0.375rem;
-
-		color: var(--clr-secondary);
-
-		background-color: var(--clr-bg-soft-up);
-		border-radius: 0.5rem;
-
-		transition: background-color 150ms ease-in-out;
-
-		&:hover {
-			background-color: var(--clr-secondary-lightest);
-
-			svg {
-				scale: 1.1;
-			}
-		}
-
-		svg {
-			transition: scale 150ms ease-in-out;
-
-			width: 100%;
-			height: 100%;
-		}
 	}
 }
 
