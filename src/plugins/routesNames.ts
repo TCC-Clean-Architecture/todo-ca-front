@@ -2,7 +2,7 @@ import { inject, type App, type InjectionKey } from 'vue';
 import RoutesNames from '@/constants/routesNames';
 import { type IRoutesNames } from '@/interfaces/routes';
 
-const injectionKey = Symbol('routesNames') as InjectionKey<IRoutesNames>;
+const injectionKey: InjectionKey<IRoutesNames> = Symbol('routesNames');
 
 export const useRoutesNames = () => inject(injectionKey)!;
 
