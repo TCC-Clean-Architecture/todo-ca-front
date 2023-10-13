@@ -1,2 +1,2 @@
 export { useRoutesNames } from './routesNames';
-export { useModal } from './modal';
+export { useModals } from './modals';
