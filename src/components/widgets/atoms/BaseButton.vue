@@ -137,11 +137,10 @@ const onClick = (e: Event) => {
 	position: relative;
 
 	height: var(--btn-height, 2.5rem);
-	min-width: var(--btn-width, 7rem);
+	min-width: var(--btn-width, 7.5rem);
 	padding-inline: var(--btn-padding, 2rem);
 
 	font-size: var(--btn-fz, 0.875rem);
-	font-weight: 500;
 	text-align: center;
 
 	border-radius: 0.5rem;
@@ -180,8 +179,8 @@ const onClick = (e: Event) => {
 		),
 		'md': (
 			'height': 2.5rem,
-			'width': 7rem,
-			'font': 0.875rem,
+			'width': 7.5rem,
+			'font': 1rem,
 			'padding': 2rem,
 		),
 		'lg': (
