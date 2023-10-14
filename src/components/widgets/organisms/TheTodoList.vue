@@ -11,7 +11,7 @@
 		>
 			<template #item="{ element }">
 				<li class="list__item">
-					<TodoItem v-bind="element" @edit="openEditTaskModal" />
+					<TodoItem v-bind="element" @edit="openEditTaskModal" @remove="openRemoveTaskModal" />
 				</li>
 			</template>
 			<template #footer>
@@ -28,6 +28,7 @@
 	</section>
 	<NewTaskModal />
 	<EditTaskModal :id="itemId" />
+	<RemoveTaskModal :id="itemId" />
 </template>
 
 <script lang="ts" setup>
@@ -35,11 +36,13 @@ import TodoItem from '@/components/widgets/molecules/TodoItem.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 import NewTaskModal from '@/components/modals/NewTaskModal.vue';
 import EditTaskModal from '@/components/modals/EditTaskModal.vue';
+import RemoveTaskModal from '@/components/modals/RemoveTaskModal.vue';
 import Draggable from 'vuedraggable';
 
 import { ref } from 'vue';
 import { useModals } from '@/plugins/core';
-import { NEW_TASK_KEY, EDIT_TASK_KEY } from '@/constants/modalKeys';
+import { NEW_TASK_KEY, EDIT_TASK_KEY, DELETE_TASK_KEY } from '@/constants/modalKeys';
+import type { ITodo } from '@/interfaces';
 
 const modals = useModals();
 
@@ -50,12 +53,9 @@ const openEditTaskModal = (id: string) => {
 	itemId.value = id;
 	modals.show(EDIT_TASK_KEY);
 };
-
-type ITodo = {
-	id: string;
-	name: string;
-	description: string;
-	status: string;
+const openRemoveTaskModal = (id: string) => {
+	itemId.value = id;
+	modals.show(DELETE_TASK_KEY);
 };
 
 const tasks = ref<ITodo[]>([

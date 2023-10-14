@@ -3,7 +3,7 @@ export interface ITodo {
 	name: string;
 	description: string;
 	status: string;
-	createdAt: string;
+	createdAt?: string;
 }
 
 export type ITodoId = Pick<ITodo, 'id'>;
