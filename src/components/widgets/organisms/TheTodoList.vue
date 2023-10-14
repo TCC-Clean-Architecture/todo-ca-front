@@ -11,7 +11,7 @@
 		>
 			<template #item="{ element }">
 				<li class="list__item">
-					<TodoItem v-bind="element" />
+					<TodoItem v-bind="element" @edit="openEditTaskModal" />
 				</li>
 			</template>
 			<template #footer>
@@ -27,21 +27,29 @@
 		</Draggable>
 	</section>
 	<NewTaskModal />
+	<EditTaskModal :id="itemId" />
 </template>
 
 <script lang="ts" setup>
 import TodoItem from '@/components/widgets/molecules/TodoItem.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 import NewTaskModal from '@/components/modals/NewTaskModal.vue';
+import EditTaskModal from '@/components/modals/EditTaskModal.vue';
 import Draggable from 'vuedraggable';
 
 import { ref } from 'vue';
 import { useModals } from '@/plugins/core';
-import { NEW_TASK_KEY } from '@/constants/modalKeys';
+import { NEW_TASK_KEY, EDIT_TASK_KEY } from '@/constants/modalKeys';
 
 const modals = useModals();
 
+const itemId = ref<string>('');
+
 const openNewTaskModal = () => modals.show(NEW_TASK_KEY);
+const openEditTaskModal = (id: string) => {
+	itemId.value = id;
+	modals.show(EDIT_TASK_KEY);
+};
 
 type ITodo = {
 	id: string;

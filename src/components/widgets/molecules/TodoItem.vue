@@ -9,8 +9,20 @@
 			<TodoItemStatus class="todo-item__status" :status="status" />
 		</div>
 		<div class="todo-item__actions">
-			<BaseButton icon="pencil" size="sm" theme="secondary" variant="flat" />
-			<BaseButton icon="trash" size="sm" theme="secondary" variant="flat" />
+			<BaseButton
+				icon="pencil"
+				size="sm"
+				theme="secondary"
+				variant="flat"
+				@click="$emit('edit', id)"
+			/>
+			<BaseButton
+				icon="trash"
+				size="sm"
+				theme="secondary"
+				variant="flat"
+				@click="$emit('remove', id)"
+			/>
 		</div>
 	</div>
 </template>
@@ -23,12 +35,20 @@ import TodoItemStatus from '@/components/widgets/molecules/TodoItemStatus.vue';
 /* -- Props -- */
 
 interface Props {
-	name?: string;
-	description?: string;
-	status?: string;
+	id: string;
+	name: string;
+	description: string;
+	status: string;
 }
 
 defineProps<Props>();
+
+/* -- Emits -- */
+
+defineEmits<{
+	(e: 'edit', id: string): void;
+	(e: 'remove', id: string): void;
+}>();
 </script>
 
 <style lang="scss" scoped>
