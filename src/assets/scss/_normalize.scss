@@ -60,20 +60,8 @@ body {
 }
 
 :where(fieldset) {
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-:where(legend) {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  padding: 0;
-  font-size: 1.5rem;
-  line-height: inherit;
-  color: inherit;
-  white-space: normal;
+  margin: 0px;
+  padding: 0px;
 }
 
 :where(h1) {

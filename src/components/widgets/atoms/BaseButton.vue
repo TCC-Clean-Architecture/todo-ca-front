@@ -105,7 +105,8 @@ const themeClass = computed(() => {
 });
 
 const sizeClass = computed(() => {
-	if (props.fit) return undefined;
+	if (props.fit) return null;
+	if (!props.size) return null;
 	return `size--${props.size}`;
 });
 

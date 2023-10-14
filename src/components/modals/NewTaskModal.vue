@@ -8,24 +8,19 @@
 				Preencha os campos para criar um novo elemento na lista
 			</p>
 			<form class="new-task-modal__form" @submit.prevent>
-				<div class="field">
-					<label
-						id="input-description-label"
-						class="field__label"
-						aria-label="input-description"
-						for="input-description"
-					>
-						Descrição
-					</label>
-					<textarea
-						class="field__textarea"
-						v-model="form.description"
-						aria-labelledby="input-description-label"
-						name="input-description"
-						id="input-description"
-						rows="5"
-					></textarea>
-				</div>
+				<InputField v-model="form.title" variant="outline" name="input-title" label="Título" />
+				<TextareaField
+					v-model="form.description"
+					variant="outline"
+					label="Descrição"
+					name="input-description"
+				/>
+				<MultiselectField
+					v-model="form.status"
+					:options="statusList"
+					name="input-status"
+					label="Status"
+				/>
 				<div class="new-task-modal__actions">
 					<BaseButton theme="secondary" pill>Criar</BaseButton>
 					<BaseButton theme="gray" variant="text" pill @click="close()">Cancelar</BaseButton>
@@ -38,22 +33,37 @@
 <script lang="ts" setup>
 import BaseModal from '@/components/widgets/molecules/BaseModal.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
+import InputField from '@/components/widgets/molecules/InputField.vue';
+import TextareaField from '@/components/widgets/molecules/TextareaField.vue';
+import MultiselectField from '@/components/widgets/molecules/MultiselectField.vue';
 
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useModals } from '@/plugins/core';
 import { NEW_TASK_KEY } from '@/constants/modalKeys';
+import { taskStatus } from '@/constants/taskStatusList';
 
 const modals = useModals();
 
 /* -- Props -- */
 
+interface IMultiselectModel {
+	value: string;
+	text: string;
+}
+
 interface IForm {
-	description: string | undefined;
+	title?: string;
+	description?: string;
+	status?: IMultiselectModel;
 }
 
 const form: IForm = reactive({
+	title: undefined,
 	description: undefined,
+	status: undefined,
 });
+
+const statusList = ref(taskStatus);
 
 /* -- Methods -- */
 
@@ -91,50 +101,6 @@ const close = () => modals.hide(NEW_TASK_KEY);
 		gap: 0.5rem;
 
 		padding-block: 2rem;
-	}
-}
-
-.field {
-	position: relative;
-
-	display: flex;
-	flex-direction: column;
-
-	width: 100%;
-	height: fit-content;
-
-	&__label {
-		position: relative;
-		top: initial;
-		left: initial;
-		transform: unset;
-
-		margin-block-end: 0.375rem;
-
-		font-size: 0.75rem;
-		font-weight: 500;
-		color: $c-gray-40;
-
-		border: none;
-	}
-	&__textarea {
-		width: 100%;
-		max-width: 100%;
-		padding: 0.5rem 0.75rem 0.5rem;
-
-		color: $c-gray-30;
-		font-size: 0.875rem;
-		font-family: 'DM Sans';
-
-		background-color: var(--clr-bg-soft);
-		border: 1px solid $c-gray-90;
-		border-radius: 0.375rem;
-		outline: none;
-		resize: none;
-
-		transition:
-			background-color 200ms,
-			border-color 300ms;
 	}
 }
 </style>

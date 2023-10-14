@@ -53,14 +53,14 @@ const modalsState = useModalsState();
 
 /* -- Props -- */
 
-interface IProps {
+export interface ModalProps {
 	name: ModalKey;
 	modelValue?: boolean;
 	width?: string;
 	title?: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<ModalProps>(), {
 	width: '500px',
 	modelValue: false,
 });
