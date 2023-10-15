@@ -38,7 +38,7 @@ import MultiselectField from '@/components/widgets/molecules/MultiselectField.vu
 import { reactive, ref } from 'vue';
 import { useModals } from '@/plugins/core';
 import { EDIT_TASK_KEY } from '@/constants/modalKeys';
-import { taskStatus } from '@/constants/taskStatusList';
+import { taskStatus } from '@/constants/taskStatus';
 
 /* -- Plugins -- */
 
@@ -71,7 +71,10 @@ const form: IForm = reactive({
 	status: undefined,
 });
 
-const statusList = ref(taskStatus);
+const statusList = Object.values(taskStatus).map((status) => ({
+	value: status.id,
+	text: status.name,
+}));
 
 /* -- Methods -- */
 

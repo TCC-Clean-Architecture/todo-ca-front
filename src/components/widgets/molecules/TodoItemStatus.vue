@@ -1,17 +1,25 @@
 <template>
 	<span class="status" :class="[`status--${status}`]">
-		{{ status }}
+		{{ parseStatus(status) }}
 	</span>
 </template>
 
 <script lang="ts" setup>
+import getAvailableStatus from '@/utils/getAvailableStatus';
+
 /* -- Props -- */
 
 interface Props {
-	status?: string;
+	status: string;
 }
 
 defineProps<Props>();
+
+/* -- Methods -- */
+
+const parseStatus = (status: string) => {
+	return getAvailableStatus(status).name;
+};
 </script>
 
 <style lang="scss" scoped>
