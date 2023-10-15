@@ -22,14 +22,17 @@ import InputField from '@/components/widgets/molecules/InputField.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
 import { reactive } from 'vue';
-import { useModals } from '@/plugins/core';
+import { useRouter } from 'vue-router';
+import { useModals, useRoutesNames } from '@/plugins/core';
 import { NEW_LIST_KEY } from '@/constants/modalKeys';
 import { useListsStore } from '@/stores/lists';
 
 /* -- Plugins -- */
 
-const listsStore = useListsStore();
+const routesNames = useRoutesNames();
+const router = useRouter();
 const modals = useModals();
+const listsStore = useListsStore();
 
 /* -- Data -- */
 
@@ -54,7 +57,10 @@ const createList = () => {
 	const body = {
 		name: form.name,
 	};
-	listsStore.addList(body).then(() => close());
+	listsStore.addList(body).then((list) => {
+		router.push({ name: routesNames.list, params: { id: list.id } });
+		close();
+	});
 };
 </script>
 

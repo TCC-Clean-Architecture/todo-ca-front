@@ -21,14 +21,17 @@
 import BaseModal from '@/components/widgets/molecules/BaseModal.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
-import { useModals } from '@/plugins/core';
+import { useRouter } from 'vue-router';
+import { useModals, useRoutesNames } from '@/plugins/core';
 import { DELETE_LIST_KEY } from '@/constants/modalKeys';
 import { useListsStore } from '@/stores/lists';
 
 /* -- Plugins -- */
 
-const listsStore = useListsStore();
+const routesNames = useRoutesNames();
+const router = useRouter();
 const modals = useModals();
+const listsStore = useListsStore();
 
 /* -- Props -- */
 
@@ -44,7 +47,10 @@ const close = () => modals.hide(DELETE_LIST_KEY);
 
 const deleteList = () => {
 	if (!props.id) return;
-	listsStore.deleteList(props.id).then(() => close());
+	listsStore.deleteList(props.id).then(() => {
+		router.push({ name: routesNames.lists });
+		close();
+	});
 };
 </script>
 
