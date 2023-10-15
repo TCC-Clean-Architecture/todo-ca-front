@@ -145,6 +145,7 @@ button.icon {
 
 	@each $size, $val in $icons-sizes {
 		&.size--#{$size} {
+			flex: 0 0 $val;
 			height: $val;
 			width: $val;
 		}
@@ -155,6 +156,11 @@ button.icon {
 			color: #{get-theme-color($theme, 'main')};
 			&:hover {
 				color: #{get-theme-color($theme, 'dark')};
+			}
+
+			&#{$self}:disabled,
+			&#{$self}--disabled {
+				color: var(--clr-mute-dark);
 			}
 		}
 	}
