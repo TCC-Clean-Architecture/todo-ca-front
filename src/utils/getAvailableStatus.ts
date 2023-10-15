@@ -5,7 +5,6 @@ const getAvailableStatus = (name: string) => {
 		id: 'unknown',
 		name: 'Desconhecido',
 	};
-
 	return taskStatus[name] || defaultTask;
 };
 
