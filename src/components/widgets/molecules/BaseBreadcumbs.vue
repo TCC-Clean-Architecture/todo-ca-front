@@ -4,7 +4,7 @@
 			<li class="breadcrumbs__item">Page</li>
 			<li class="breadcrumbs__divider">/</li>
 			<li class="breadcrumbs__item">
-				<RouterLink :to="{ name: routesNames.home }" aria-current="page">Dashboard</RouterLink>
+				<RouterLink :to="{ name: routesNames.lists }" aria-current="page">Dashboard</RouterLink>
 			</li>
 		</ol>
 	</nav>

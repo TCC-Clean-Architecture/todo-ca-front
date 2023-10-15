@@ -1,7 +1,8 @@
 import { type IRoutesNames } from '@/interfaces/routes';
 
 const RoutesNames: Readonly<IRoutesNames> = {
-	home: 'Home',
+	lists: 'Lists',
+	list: 'ListsList',
 };
 
 export default RoutesNames;

@@ -12,12 +12,12 @@
 		</div>
 		<nav class="sidebar__navigation">
 			<RouterLink
-				:to="{ name: routesNames.home }"
+				:to="{ name: routesNames.lists }"
 				class="sidebar__link"
 				activeClass="sidebar__link--active"
 			>
 				<i class="link__icon"><IconHome /></i>
-				<span v-show="!layout.collapsed">{{ routesNames.home }}</span>
+				<span v-show="!layout.collapsed">{{ routesNames.lists }}</span>
 			</RouterLink>
 		</nav>
 		<div class="sidebar__misc">
