@@ -9,4 +9,10 @@ const router = createRouter({
 	linkExactActiveClass: 'link--exact-active',
 });
 
+router.beforeEach((to, from, next) => {
+	if (to.meta.requiresAuth) {
+		next('login');
+	} else next();
+});
+
 export default router;
