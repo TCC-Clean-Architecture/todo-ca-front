@@ -4,7 +4,7 @@
 			tag="ol"
 			class="list__wrapper"
 			handle=".todo-item__handle"
-			v-model="tasks"
+			v-model="todos"
 			group="tasks"
 			item-key="id"
 			:animation="200"
@@ -40,28 +40,53 @@ import RemoveTaskModal from '@/components/modals/RemoveTaskModal.vue';
 import Draggable from 'vuedraggable';
 
 import { ref, computed, onMounted, nextTick } from 'vue';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useModals } from '@/plugins/core';
-import { useTodosStore } from '@/stores/todos';
+import { useListsStore } from '@/stores/lists';
 import { NEW_TASK_KEY, EDIT_TASK_KEY, DELETE_TASK_KEY } from '@/constants/modalKeys';
 
+/* -- Plugins -- */
+
+const route = useRoute();
 const modals = useModals();
-const todosStore = useTodosStore();
+const listsStore = useListsStore();
+
+/* -- Data -- */
 
 const itemId = ref<string>();
-const tasks = computed(() => todosStore.todos);
+
+/* -- Computed -- */
+
+const listId = computed(() => {
+	return route.params.id as string;
+});
+
+const todos = computed(() => listsStore.listTodos);
+
+/* -- Methods -- */
 
 const openNewTaskModal = () => modals.show(NEW_TASK_KEY);
+
 const openEditTaskModal = (id: string) => {
 	itemId.value = id;
 	nextTick(() => modals.show(EDIT_TASK_KEY));
 };
+
 const openRemoveTaskModal = (id: string) => {
 	itemId.value = id;
 	nextTick(() => modals.show(DELETE_TASK_KEY));
 };
 
+/* -- Lifecycle -- */
+
+onBeforeRouteUpdate((to, from) => {
+	if (to.params.id !== from.params.id) {
+		listsStore.getList(to.params.id as string);
+	}
+});
+
 onMounted(() => {
-	todosStore.getTodos();
+	listsStore.getList(listId.value);
 });
 </script>
 

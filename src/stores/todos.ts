@@ -11,17 +11,6 @@ export const useTodosStore = defineStore('todos', {
 		todos: [],
 	}),
 	actions: {
-		getTodos(): Promise<ITodo[]> {
-			return new Promise((resolve, reject) => {
-				todosServices
-					.GET_TODOS()
-					.then((todos) => {
-						this.todos = todos;
-						resolve(todos);
-					})
-					.catch((err) => reject(err));
-			});
-		},
 		getTodo(id: string): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
 				const storeTodo = this.todos.find((t) => t.id === id);

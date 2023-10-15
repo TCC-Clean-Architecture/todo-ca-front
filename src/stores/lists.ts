@@ -4,12 +4,18 @@ import { defineStore } from 'pinia';
 
 interface IListsStoreState {
 	lists: IList[];
+	list: IList | null;
 }
 
 export const useListsStore = defineStore('lists', {
 	state: (): IListsStoreState => ({
 		lists: [],
+		list: null,
 	}),
+	getters: {
+		listTodos: (state) => state.list?.todos ?? [],
+		listName: (state) => state.list?.name,
+	},
 	actions: {
 		getLists(): Promise<IList[]> {
 			return new Promise((resolve, reject) => {
@@ -26,8 +32,9 @@ export const useListsStore = defineStore('lists', {
 			return new Promise((resolve, reject) => {
 				listsServices
 					.GET_LIST(id)
-					.then((lists) => {
-						resolve(lists);
+					.then((list) => {
+						this.list = { name: '', id, todos: list };
+						resolve({ name: '', id, todos: list });
 					})
 					.catch((err) => reject(err));
 			});

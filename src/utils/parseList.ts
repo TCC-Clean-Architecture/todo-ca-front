@@ -1,14 +1,15 @@
 import type { IApiList, IList } from '@/interfaces';
+import { parseTodos } from '@/utils/parseTodo';
 
 export const parseLists = (lists: IApiList[]): IList[] => {
 	return lists.map((list) => parseList(list));
 };
 
-export const parseList = (todo: IApiList): IList => {
+export const parseList = (list: IApiList): IList => {
 	return {
-		id: todo._id,
-		name: todo.name,
-		todos: todo.todos,
-		createdAt: todo.createdAt,
+		id: list._id,
+		name: list.name,
+		todos: parseTodos(list.todos),
+		createdAt: list.createdAt,
 	};
 };

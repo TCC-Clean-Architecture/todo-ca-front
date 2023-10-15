@@ -8,30 +8,12 @@ import type {
 	ITodoId,
 	IApiTodoId,
 } from '@/interfaces';
-import { parseTodo, parseTodos } from '@/utils/parseTodo';
+import { parseTodo } from '@/utils/parseTodo';
 import { responseToJSON } from '@/utils/responseToJSON';
 
 const http = Http.getInstance();
 
 export const todosServices = {
-	GET_TODOS: (): Promise<ITodo[]> => {
-		return new Promise((resolve, reject) => {
-			http({
-				method: 'GET',
-				url: '/todos',
-				transformResponse: [
-					responseToJSON,
-					(data: IReponseData<IApiTodo[]>) => ({ ...data, content: parseTodos(data.content) }),
-				],
-			})
-				.then((res: IResponse<ITodo[]>) => {
-					resolve(res.data.content);
-				})
-				.catch((err: PromiseRejectedResult) => {
-					reject(err);
-				});
-		});
-	},
 	GET_TODO: (id: string): Promise<ITodo> => {
 		return new Promise((resolve, reject) => {
 			http({

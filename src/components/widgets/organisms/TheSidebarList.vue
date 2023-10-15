@@ -1,6 +1,6 @@
 <template>
 	<ul class="sidebar-lists">
-		<li v-for="list in todoLists" :key="list.id">
+		<li v-for="list in lists" :key="list.id">
 			<button
 				class="sidebar-lists__item"
 				:class="{ 'sidebar-lists__item--active': isList(list.id) }"
@@ -25,16 +25,18 @@
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 import BaseIcon from '@/components/widgets/atoms/BaseIcon.vue';
 
+import { inject, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { inject, computed } from 'vue';
 import { LAYOUT_CONFIG_KEY } from '@/constants/injectionKeys';
 import { useRoutesNames } from '@/plugins/core';
+import { useListsStore } from '@/stores/lists';
 
 /* -- Plugins -- */
 
 const routesNames = useRoutesNames();
 const router = useRouter();
 const route = useRoute();
+const listsStore = useListsStore();
 
 /* -- Injects -- */
 
@@ -42,22 +44,7 @@ const layout = inject(LAYOUT_CONFIG_KEY)!;
 
 /* -- Computeds -- */
 
-const todoLists = computed(() => {
-	return [
-		{
-			id: '0',
-			name: 'Minha Lista',
-		},
-		{
-			id: '1',
-			name: 'Lista 1',
-		},
-		{
-			id: '2',
-			name: 'Lista 2',
-		},
-	];
-});
+const lists = computed(() => listsStore.lists);
 
 /* -- Methods -- */
 
@@ -68,6 +55,10 @@ const isList = (id: string) => {
 const useList = (id: string) => {
 	router.push({ name: routesNames.list, params: { id } });
 };
+
+onMounted(() => {
+	listsStore.getLists();
+});
 </script>
 
 <style lang="scss" scoped>
