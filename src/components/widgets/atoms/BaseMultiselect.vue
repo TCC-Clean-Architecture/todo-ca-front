@@ -126,37 +126,13 @@ const openWrapper = () => {
 
 	border-radius: 0.375rem;
 
-	$sizes: (
-		'xs': 1.5rem,
-		'sm': 2rem,
-		'md': 2.5rem,
-		'lg': 3rem,
-		'xl': 3.5rem,
-	);
-
-	$svg-sizes: (
-		'xs': 0.5rem,
-		'sm': 0.75rem,
-		'md': 1rem,
-		'lg': 1.25rem,
-		'xl': 1.5rem,
-	);
-
-	$font-sizes: (
-		'xs': 0.625rem,
-		'sm': 0.75rem,
-		'md': 0.875rem,
-		'lg': 1.25rem,
-		'xl': 1.5rem,
-	);
-
-	@each $key, $val in $sizes {
-		&.size--#{$key} {
-			height: $val;
-			font-size: map-get($font-sizes, $key);
+	@each $size, $val in $multiselects-sizes {
+		&.size--#{$size} {
+			height: map-get($val, 'size');
+			font-size: map-get($val, 'font');
 
 			#{$self}__search > svg {
-				width: map-get($svg-sizes, $key);
+				width: map-get($val, 'svg');
 			}
 		}
 	}

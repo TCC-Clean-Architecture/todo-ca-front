@@ -143,15 +143,7 @@ button.icon {
 		color: inherit;
 	}
 
-	$sizes: (
-		'xs': 0.875rem,
-		'sm': 1.25rem,
-		'md': 1.5rem,
-		'lg': 1.75rem,
-		'xl': 2rem,
-	);
-
-	@each $size, $val in $sizes {
+	@each $size, $val in $icons-sizes {
 		&.size--#{$size} {
 			height: $val;
 			width: $val;

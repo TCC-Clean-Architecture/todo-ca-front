@@ -165,40 +165,7 @@ const onClick = (e: Event) => {
 		color: inherit;
 	}
 
-	$sizes: (
-		'xs': (
-			'height': 1.5rem,
-			'width': 4rem,
-			'font': 0.625rem,
-			'padding': 1rem,
-		),
-		'sm': (
-			'height': 2rem,
-			'width': 6rem,
-			'font': 0.75rem,
-			'padding': 1.5rem,
-		),
-		'md': (
-			'height': 2.5rem,
-			'width': 7.5rem,
-			'font': 1rem,
-			'padding': 2rem,
-		),
-		'lg': (
-			'height': 3rem,
-			'width': 8rem,
-			'font': 1.125rem,
-			'padding': 2.5rem,
-		),
-		'xl': (
-			'height': 3.5rem,
-			'width': 9rem,
-			'font': 1.25rem,
-			'padding': 3rem,
-		),
-	);
-
-	@each $size, $val in $sizes {
+	@each $size, $val in $buttons-sizes {
 		&.size--#{$size} {
 			--btn-height: #{map-get($val, 'height')};
 			--btn-width: #{map-get($val, 'width')};
