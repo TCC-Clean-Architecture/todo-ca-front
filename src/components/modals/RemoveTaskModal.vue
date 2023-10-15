@@ -21,12 +21,15 @@
 import BaseModal from '@/components/widgets/molecules/BaseModal.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { useModals } from '@/plugins/core';
 import { DELETE_TASK_KEY } from '@/constants/modalKeys';
 import { useTodosStore } from '@/stores/todos';
 
 /* -- Plugins -- */
 
+const route = useRoute();
 const todosStore = useTodosStore();
 const modals = useModals();
 
@@ -38,12 +41,22 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
+/* -- Computed -- */
+
+const listId = computed(() => {
+	return route.params.id as string;
+});
+
 /* -- Methods -- */
 
 const close = () => modals.hide(DELETE_TASK_KEY);
 
 const deleteTodo = () => {
-	todosStore.deleteTodo(props.id).then(() => {
+	const params = {
+		listId: listId.value,
+		todoId: props.id,
+	};
+	todosStore.deleteTodo(params).then(() => {
 		close();
 	});
 };

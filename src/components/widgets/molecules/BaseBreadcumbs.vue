@@ -3,18 +3,32 @@
 		<ol class="breadcrumbs__list">
 			<li class="breadcrumbs__item">Page</li>
 			<li class="breadcrumbs__divider">/</li>
-			<li class="breadcrumbs__item">
-				<RouterLink :to="{ name: routesNames.home }" aria-current="page">Dashboard</RouterLink>
+			<div class="breadcrumbs__item">{{ routesNames.lists }}</div>
+			<div class="breadcrumbs__divider" v-if="listId">/</div>
+			<li class="breadcrumbs__item" v-if="listId">
+				<RouterLink :to="{ name: routesNames.list, params: { id: listId } }" aria-current="page">
+					{{ listId }}
+				</RouterLink>
 			</li>
 		</ol>
 	</nav>
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { useRoutesNames } from '@/plugins/core';
+
 /* -- Plugins -- */
 
+const route = useRoute();
 const routesNames = useRoutesNames();
+
+/* -- computed -- */
+
+const listId = computed(() => {
+	return route.params.id as string;
+});
 </script>
 
 <style lang="scss" scoped>

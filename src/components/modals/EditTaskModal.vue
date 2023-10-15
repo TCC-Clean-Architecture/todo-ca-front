@@ -35,7 +35,8 @@ import InputField from '@/components/widgets/molecules/InputField.vue';
 import TextareaField from '@/components/widgets/molecules/TextareaField.vue';
 import MultiselectField from '@/components/widgets/molecules/MultiselectField.vue';
 
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { useModals } from '@/plugins/core';
 import { EDIT_TASK_KEY } from '@/constants/modalKeys';
 import { taskStatus } from '@/constants/taskStatus';
@@ -44,6 +45,7 @@ import getAvailableStatus from '@/utils/getAvailableStatus';
 
 /* -- Plugins -- */
 
+const route = useRoute();
 const todosStore = useTodosStore();
 const modals = useModals();
 
@@ -79,6 +81,12 @@ const statusList = Object.values(taskStatus).map((status) => ({
 	text: status.name,
 }));
 
+/* -- Computed -- */
+
+const listId = computed(() => {
+	return route.params.id as string;
+});
+
 /* -- Methods -- */
 
 const close = () => modals.hide(EDIT_TASK_KEY);
@@ -90,7 +98,11 @@ const resetData = () => {
 };
 
 const getTodo = () => {
-	todosStore.getTodo(props.id).then((todo) => {
+	const params = {
+		listId: listId.value,
+		todoId: props.id,
+	};
+	todosStore.getTodo(params).then((todo) => {
 		form.title = todo.name;
 		form.description = todo.description;
 		const status = getAvailableStatus(todo.status);
@@ -103,12 +115,16 @@ const getTodo = () => {
 
 const saveTodo = () => {
 	if (!(form.title && form.description && form.status)) return;
-	const requestBody = {
+	const params = {
+		listId: listId.value,
+		todoId: props.id,
+	};
+	const body = {
 		name: form.title,
 		description: form.description,
 		status: form.status.value,
 	};
-	todosStore.editTodo(props.id, requestBody).then(() => {
+	todosStore.editTodo(params, body).then(() => {
 		close();
 	});
 };

@@ -1,5 +1,3 @@
-import { type IDashboardRoutesNames } from './dashboard';
+import { type IListsRoutesNames } from './lists';
 
-export interface IRoutesNames extends IDashboardRoutesNames {
-	home: string;
-}
+export interface IRoutesNames extends IListsRoutesNames {}

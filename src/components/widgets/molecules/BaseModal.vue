@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
-import { watchEffect } from 'vue';
+import { watch } from 'vue';
 import { syncRef, useVModel } from '@vueuse/core';
 import { useModalsState } from '@/composables/modalsState';
 import { useModal } from '@/composables/modal';
@@ -81,10 +81,14 @@ syncRef(modelStatus, status);
 
 /* -- Watch -- */
 
-watchEffect(() => {
-	if (status) emit('open');
-	else emit('close');
-});
+watch(
+	status,
+	(bool) => {
+		if (bool) emit('open');
+		else emit('close');
+	},
+	{ immediate: true },
+);
 </script>
 
 <style lang="scss" scoped>
