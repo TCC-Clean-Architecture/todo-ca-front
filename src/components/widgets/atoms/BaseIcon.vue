@@ -156,6 +156,11 @@ button.icon {
 			&:hover {
 				color: #{get-theme-color($theme, 'dark')};
 			}
+
+			&#{$self}:disabled,
+			&#{$self}--disabled {
+				color: var(--clr-mute-dark);
+			}
 		}
 	}
 

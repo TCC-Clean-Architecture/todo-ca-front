@@ -10,16 +10,12 @@
 			</i>
 			<BaseDivider theme="primary" />
 		</div>
-		<nav class="sidebar__navigation">
-			<RouterLink
-				:to="{ name: routesNames.lists }"
-				class="sidebar__link"
-				activeClass="sidebar__link--active"
-			>
-				<i class="link__icon"><IconHome /></i>
-				<span v-show="!layout.collapsed">{{ routesNames.lists }}</span>
-			</RouterLink>
-		</nav>
+		<section class="sidebar__lists">
+			<BaseButton class="sidebar__create-list" theme="secondary" prepend-icon="plus" block>
+				<span v-if="!layout.collapsed">Lista</span>
+			</BaseButton>
+			<TheSidebarList />
+		</section>
 		<div class="sidebar__misc">
 			<SwitchColorTheme />
 		</div>
@@ -30,17 +26,13 @@
 import Logo2DO4U from '@/components/icons/Logo2DO4U.vue';
 import LogoCollapsed2DO4U from '@/components/icons/LogoCollapsed2DO4U.vue';
 import IconAngles from '@/components/icons/IconAngles.vue';
-import IconHome from '@/components/icons/IconHome.vue';
 import BaseDivider from '@/components/widgets/atoms/BaseDivider.vue';
+import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 import SwitchColorTheme from '@/components/widgets/atoms/SwitchColorTheme.vue';
+import TheSidebarList from '@/components/widgets/organisms/TheSidebarList.vue';
 
 import { inject } from 'vue';
-import { useRoutesNames } from '@/plugins/core';
 import { LAYOUT_CONFIG_KEY } from '@/constants/injectionKeys';
-
-/* -- Plugins -- */
-
-const routesNames = useRoutesNames();
 
 /* -- Injects -- */
 
@@ -95,24 +87,8 @@ const onCollapseMenu = () => {
 			margin-inline: 0rem;
 		}
 
-		#{$self}__navigation {
+		#{$self}__lists {
 			margin-inline: 0.75rem;
-		}
-
-		#{$self}__link {
-			justify-content: center;
-
-			background-color: var(--clr-secondary);
-
-			border-radius: 0.375rem;
-
-			&--active .link__icon {
-				color: var(--clr-bg-soft);
-			}
-
-			&::after {
-				display: none;
-			}
 		}
 
 		#{$self}__button-collapse > svg {
@@ -138,68 +114,18 @@ const onCollapseMenu = () => {
 		}
 	}
 
-	&__navigation {
+	&__lists {
 		display: flex;
 		flex-direction: column;
+		gap: 1rem;
+
 		margin-block: 1rem;
-		margin-inline-start: 1.5rem;
+		margin-inline: 1rem;
 	}
 
-	&__link {
-		position: relative;
-
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-
-		height: 2.5rem;
-
-		color: var(--clr-primary);
-
-		transition: all 150ms ease-in-out;
-
-		&:hover {
-			background-color: var(--clr-bg-soft-up);
-		}
-
-		&--active {
-			&::after {
-				content: '';
-
-				width: 0.25rem;
-				height: 100%;
-
-				margin-inline-start: auto;
-
-				background-color: var(--clr-secondary);
-			}
-
-			.link__icon {
-				color: var(--clr-secondary);
-			}
-		}
-
-		span {
-			font-size: 1rem;
-			font-weight: 700;
-			line-height: 1rem;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			overflow: hidden;
-		}
-
-		.link__icon {
-			margin: 0.25rem;
-
-			$size: 1.5rem;
-			height: $size;
-			width: $size;
-
-			& > svg {
-				width: inherit;
-				height: inherit;
-			}
-		}
+	&__create-list {
+		padding-inline: 0;
+		font-weight: 600;
 	}
 
 	&__misc {

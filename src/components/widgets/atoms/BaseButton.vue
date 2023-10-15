@@ -197,7 +197,7 @@ const onClick = (e: Event) => {
 	}
 
 	&--icon {
-		flex: 0 0 auto;
+		flex: 0 0 var(--btn-height);
 		aspect-ratio: 1/1;
 		height: var(--btn-height);
 		width: var(--btn-height);
