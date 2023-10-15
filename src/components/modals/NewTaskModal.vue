@@ -37,7 +37,8 @@ import InputField from '@/components/widgets/molecules/InputField.vue';
 import TextareaField from '@/components/widgets/molecules/TextareaField.vue';
 import MultiselectField from '@/components/widgets/molecules/MultiselectField.vue';
 
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { useModals } from '@/plugins/core';
 import { NEW_TASK_KEY } from '@/constants/modalKeys';
 import { taskStatus } from '@/constants/taskStatus';
@@ -46,6 +47,7 @@ import { useTodosStore } from '@/stores/todos';
 /* -- Plugins -- */
 
 const todosStore = useTodosStore();
+const route = useRoute();
 const modals = useModals();
 
 /* -- Data -- */
@@ -72,6 +74,12 @@ const statusList = Object.values(taskStatus).map((status) => ({
 	text: status.name,
 }));
 
+/* -- Computed -- */
+
+const listId = computed(() => {
+	return route.params.id as string;
+});
+
 /* -- Methods -- */
 
 const close = () => modals.hide(NEW_TASK_KEY);
@@ -89,7 +97,7 @@ const createTodo = () => {
 		description: form.description,
 		status: form.status.value,
 	};
-	todosStore.addTodo(requestBody).then(() => {
+	todosStore.addTodo(listId.value, requestBody).then(() => {
 		close();
 	});
 };
