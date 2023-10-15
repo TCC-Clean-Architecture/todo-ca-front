@@ -34,9 +34,9 @@ export const useListsStore = defineStore('lists', {
 				listsServices
 					.GET_LIST(id)
 					.then((list) => {
-						this.list = { name: '', id, todos: list };
-						todosStore.todos = list;
-						resolve({ name: '', id, todos: list });
+						this.list = list;
+						todosStore.todos = list.todos;
+						resolve(list);
 					})
 					.catch((err) => reject(err));
 			});
