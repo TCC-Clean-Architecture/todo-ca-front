@@ -2,8 +2,6 @@ import Http from '@/services/axios';
 import type {
 	IResponse,
 	IReponseData,
-	IApiTodo,
-	ITodo,
 	IApiList,
 	IList,
 	IListBasic,
@@ -12,7 +10,6 @@ import type {
 } from '@/interfaces';
 import { parseList, parseLists } from '@/utils/parseList';
 import { responseToJSON } from '@/utils/responseToJSON';
-import { parseTodos } from '@/utils/parseTodo';
 
 const http = Http.getInstance();
 
@@ -35,17 +32,17 @@ export const listsServices = {
 				});
 		});
 	},
-	GET_LIST: (id: string): Promise<ITodo[]> => {
+	GET_LIST: (id: string): Promise<IList> => {
 		return new Promise((resolve, reject) => {
 			http({
 				method: 'GET',
 				url: `/todos/list/${id}`,
 				transformResponse: [
 					responseToJSON,
-					(data: IReponseData<IApiTodo[]>) => ({ ...data, content: parseTodos(data.content) }),
+					(data: IReponseData<IApiList>) => ({ ...data, content: parseList(data.content) }),
 				],
 			})
-				.then((res: IResponse<ITodo[]>) => {
+				.then((res: IResponse<IList>) => {
 					resolve(res.data.content);
 				})
 				.catch((err: PromiseRejectedResult) => {

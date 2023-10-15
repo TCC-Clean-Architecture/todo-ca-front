@@ -24,10 +24,12 @@ import { computed, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 import { useModals } from '@/plugins/core';
 import { DELETE_LIST_KEY } from '@/constants/modalKeys';
+import { useListsStore } from '@/stores/lists';
 
 /* -- Plugins -- */
 
 const modals = useModals();
+const listsStore = useListsStore();
 const route = useRoute();
 
 /* -- Computeds -- */
@@ -36,7 +38,7 @@ const listId = computed(() => {
 	return route.params.id as string;
 });
 
-const listName = computed(() => 'Lista de Atividades');
+const listName = computed(() => listsStore.listName);
 
 /* -- Methods -- */
 
