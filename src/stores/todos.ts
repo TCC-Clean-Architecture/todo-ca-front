@@ -23,11 +23,16 @@ export const useTodosStore = defineStore('todos', {
 		},
 		getTodo(id: string): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
-				TodosServices.GET_TODO(id)
-					.then((todo) => {
-						resolve(todo);
-					})
-					.catch((err) => reject(err));
+				const storeTodo = this.todos.find((t) => t.id === id);
+				if (storeTodo) {
+					resolve(storeTodo);
+				} else {
+					TodosServices.GET_TODO(id)
+						.then((todo) => {
+							resolve(todo);
+						})
+						.catch((err) => reject(err));
+				}
 			});
 		},
 		addTodo(body: ITodoBasic): Promise<ITodo> {
@@ -44,6 +49,8 @@ export const useTodosStore = defineStore('todos', {
 			return new Promise((resolve, reject) => {
 				TodosServices.EDIT_TODO(id, body)
 					.then((todo) => {
+						const todoIndex = this.todos.findIndex((t) => t.id === id);
+						this.todos[todoIndex] = todo;
 						resolve(todo);
 					})
 					.catch((err) => reject(err));
