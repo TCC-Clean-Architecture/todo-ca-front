@@ -11,7 +11,13 @@
 			<BaseDivider theme="primary" />
 		</div>
 		<section class="sidebar__lists">
-			<BaseButton class="sidebar__create-list" theme="secondary" prepend-icon="plus" block>
+			<BaseButton
+				class="sidebar__create-list"
+				theme="secondary"
+				prepend-icon="plus"
+				block
+				@click="openNewListModal()"
+			>
 				<span v-if="!layout.collapsed">Lista</span>
 			</BaseButton>
 			<TheSidebarList />
@@ -20,6 +26,7 @@
 			<SwitchColorTheme />
 		</div>
 	</div>
+	<NewListModal />
 </template>
 
 <script lang="ts" setup>
@@ -30,24 +37,26 @@ import BaseDivider from '@/components/widgets/atoms/BaseDivider.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 import SwitchColorTheme from '@/components/widgets/atoms/SwitchColorTheme.vue';
 import TheSidebarList from '@/components/widgets/organisms/TheSidebarList.vue';
+import NewListModal from '@/components/modals/NewListModal.vue';
 
 import { inject } from 'vue';
+import { useModals } from '@/plugins/core';
 import { LAYOUT_CONFIG_KEY } from '@/constants/injectionKeys';
+import { NEW_LIST_KEY } from '@/constants/modalKeys';
+
+/* -- Plugins -- */
+
+const modals = useModals();
 
 /* -- Injects -- */
 
 const layout = inject(LAYOUT_CONFIG_KEY)!;
 
-/* -- Emits -- */
-
-const emit = defineEmits<{
-	(e: 'collapse-menu'): void;
-}>();
-
 /* -- Methods -- */
 
+const openNewListModal = () => modals.show(NEW_LIST_KEY);
+
 const onCollapseMenu = () => {
-	emit('collapse-menu');
 	layout.toggleCollapse();
 };
 </script>
