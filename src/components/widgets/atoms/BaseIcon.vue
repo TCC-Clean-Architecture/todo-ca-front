@@ -145,6 +145,7 @@ button.icon {
 
 	@each $size, $val in $icons-sizes {
 		&.size--#{$size} {
+			flex: 0 0 $val;
 			height: $val;
 			width: $val;
 		}
