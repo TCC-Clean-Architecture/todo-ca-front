@@ -64,9 +64,9 @@ export const useTodosStore = defineStore('todos', {
 			return new Promise((resolve, reject) => {
 				todosServices
 					.DELETE_TODO(id)
-					.then((deletedId) => {
-						this.todos = this.todos.filter((t) => t.id !== id);
-						resolve(deletedId);
+					.then((deleted) => {
+						this.todos = this.todos.filter((t) => t.id !== deleted.id);
+						resolve(deleted);
 					})
 					.catch((err) => reject(err));
 			});
