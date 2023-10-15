@@ -1,6 +1,6 @@
 import { todosServices } from '@/services';
 import { defineStore } from 'pinia';
-import type { ITodo, ITodoBasic, ITodoId } from '@/interfaces';
+import type { ITodo, ITodoBasic, ITodoId, ITodoParamsIDs } from '@/interfaces';
 
 interface ITodosState {
 	todos: ITodo[];
@@ -11,14 +11,14 @@ export const useTodosStore = defineStore('todos', {
 		todos: [],
 	}),
 	actions: {
-		getTodo(id: string): Promise<ITodo> {
+		getTodo(params: ITodoParamsIDs): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
-				const storeTodo = this.todos.find((t) => t.id === id);
+				const storeTodo = this.todos.find((t) => t.id === params.todoId);
 				if (storeTodo) {
 					resolve(storeTodo);
 				} else {
 					todosServices
-						.GET_TODO(id)
+						.GET_TODO(params)
 						.then((todo) => {
 							resolve(todo);
 						})
@@ -26,10 +26,10 @@ export const useTodosStore = defineStore('todos', {
 				}
 			});
 		},
-		addTodo(body: ITodoBasic): Promise<ITodo> {
+		addTodo(listId: string, body: ITodoBasic): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
 				todosServices
-					.CREATE_TODO(body)
+					.CREATE_TODO(listId, body)
 					.then((todo) => {
 						this.todos.push(todo);
 						resolve(todo);
@@ -37,22 +37,22 @@ export const useTodosStore = defineStore('todos', {
 					.catch((err) => reject(err));
 			});
 		},
-		editTodo(id: string, body: ITodoBasic): Promise<ITodo> {
+		editTodo(params: ITodoParamsIDs, body: ITodoBasic): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
 				todosServices
-					.EDIT_TODO(id, body)
+					.EDIT_TODO(params, body)
 					.then((todo) => {
-						const todoIndex = this.todos.findIndex((t) => t.id === id);
+						const todoIndex = this.todos.findIndex((t) => t.id === params.todoId);
 						this.todos[todoIndex] = todo;
 						resolve(todo);
 					})
 					.catch((err) => reject(err));
 			});
 		},
-		deleteTodo(id: string): Promise<ITodoId> {
+		deleteTodo(params: ITodoParamsIDs): Promise<ITodoId> {
 			return new Promise((resolve, reject) => {
 				todosServices
-					.DELETE_TODO(id)
+					.DELETE_TODO(params)
 					.then((deleted) => {
 						this.todos = this.todos.filter((t) => t.id !== deleted.id);
 						resolve(deleted);

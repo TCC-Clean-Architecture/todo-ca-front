@@ -1,6 +1,7 @@
+import { defineStore } from 'pinia';
 import type { IList, IListBasic, IListId } from '@/interfaces';
 import { listsServices } from '@/services';
-import { defineStore } from 'pinia';
+import { useTodosStore } from './todos';
 
 interface IListsStoreState {
 	lists: IList[];
@@ -13,7 +14,6 @@ export const useListsStore = defineStore('lists', {
 		list: null,
 	}),
 	getters: {
-		listTodos: (state) => state.list?.todos ?? [],
 		listName: (state) => state.list?.name,
 	},
 	actions: {
@@ -29,11 +29,13 @@ export const useListsStore = defineStore('lists', {
 			});
 		},
 		getList(id: string): Promise<IList> {
+			const todosStore = useTodosStore();
 			return new Promise((resolve, reject) => {
 				listsServices
 					.GET_LIST(id)
 					.then((list) => {
 						this.list = { name: '', id, todos: list };
+						todosStore.todos = list;
 						resolve({ name: '', id, todos: list });
 					})
 					.catch((err) => reject(err));

@@ -15,3 +15,8 @@ export type IApiTodoId = Pick<IApiTodo, '_id'>;
 export type ITodoId = Pick<ITodo, 'id'>;
 
 export type ITodoBasic = Omit<ITodo, 'id' | 'createdAt'>;
+
+export interface ITodoParamsIDs {
+	listId: string;
+	todoId: string;
+}

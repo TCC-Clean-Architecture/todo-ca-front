@@ -43,6 +43,7 @@ import { ref, computed, onMounted, nextTick } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useModals } from '@/plugins/core';
 import { useListsStore } from '@/stores/lists';
+import { useTodosStore } from '@/stores/todos';
 import { NEW_TASK_KEY, EDIT_TASK_KEY, DELETE_TASK_KEY } from '@/constants/modalKeys';
 
 /* -- Plugins -- */
@@ -50,6 +51,7 @@ import { NEW_TASK_KEY, EDIT_TASK_KEY, DELETE_TASK_KEY } from '@/constants/modalK
 const route = useRoute();
 const modals = useModals();
 const listsStore = useListsStore();
+const todosStore = useTodosStore();
 
 /* -- Data -- */
 
@@ -61,7 +63,7 @@ const listId = computed(() => {
 	return route.params.id as string;
 });
 
-const todos = computed(() => listsStore.listTodos);
+const todos = computed(() => todosStore.todos);
 
 /* -- Methods -- */
 
