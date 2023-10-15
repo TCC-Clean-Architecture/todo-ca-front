@@ -1,5 +1,5 @@
 <template>
-	<BaseModal :name="EDIT_TASK_KEY" class="edit-task-modal">
+	<BaseModal :name="EDIT_TASK_KEY" class="edit-task-modal" @open="getTodo()" @close="resetData()">
 		<template #title>
 			<h2 class="edit-task-modal__title">Editar a fazer</h2>
 		</template>
@@ -20,7 +20,7 @@
 					label="Status"
 				/>
 				<div class="edit-task-modal__actions">
-					<BaseButton theme="secondary" pill>Salvar</BaseButton>
+					<BaseButton theme="secondary" pill @click="saveTodo">Salvar</BaseButton>
 					<BaseButton theme="gray" variant="text" pill @click="close()">Cancelar</BaseButton>
 				</div>
 			</form>
@@ -35,13 +35,16 @@ import InputField from '@/components/widgets/molecules/InputField.vue';
 import TextareaField from '@/components/widgets/molecules/TextareaField.vue';
 import MultiselectField from '@/components/widgets/molecules/MultiselectField.vue';
 
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import { useModals } from '@/plugins/core';
 import { EDIT_TASK_KEY } from '@/constants/modalKeys';
 import { taskStatus } from '@/constants/taskStatus';
+import { useTodosStore } from '@/stores/todos';
+import getAvailableStatus from '@/utils/getAvailableStatus';
 
 /* -- Plugins -- */
 
+const todosStore = useTodosStore();
 const modals = useModals();
 
 /* -- Props -- */
@@ -50,7 +53,7 @@ interface IProps {
 	id: string;
 }
 
-defineProps<IProps>();
+const props = defineProps<IProps>();
 
 /* -- Data -- */
 
@@ -79,6 +82,36 @@ const statusList = Object.values(taskStatus).map((status) => ({
 /* -- Methods -- */
 
 const close = () => modals.hide(EDIT_TASK_KEY);
+
+const resetData = () => {
+	form.title = undefined;
+	form.description = undefined;
+	form.status = undefined;
+};
+
+const getTodo = () => {
+	todosStore.getTodo(props.id).then((todo) => {
+		form.title = todo.name;
+		form.description = todo.description;
+		const status = getAvailableStatus(todo.status);
+		form.status = {
+			value: status.id,
+			text: status.name,
+		};
+	});
+};
+
+const saveTodo = () => {
+	if (!(form.title && form.description && form.status)) return;
+	const requestBody = {
+		name: form.title,
+		description: form.description,
+		status: form.status.value,
+	};
+	todosStore.editTodo(props.id, requestBody).then(() => {
+		close();
+	});
+};
 </script>
 
 <style lang="scss" scoped>
@@ -115,3 +148,4 @@ const close = () => modals.hide(EDIT_TASK_KEY);
 	}
 }
 </style>
+@/constants/taskStatus

@@ -1,5 +1,5 @@
 <template>
-	<BaseModal :name="NEW_TASK_KEY" class="new-task-modal">
+	<BaseModal :name="NEW_TASK_KEY" class="new-task-modal" @close="resetData()">
 		<template #title>
 			<h2 class="new-task-modal__title">Criar novo a fazer</h2>
 		</template>
@@ -22,7 +22,7 @@
 					label="Status"
 				/>
 				<div class="new-task-modal__actions">
-					<BaseButton theme="secondary" pill>Criar</BaseButton>
+					<BaseButton theme="secondary" pill @click="createTodo">Criar</BaseButton>
 					<BaseButton theme="gray" variant="text" pill @click="close()">Cancelar</BaseButton>
 				</div>
 			</form>
@@ -37,13 +37,15 @@ import InputField from '@/components/widgets/molecules/InputField.vue';
 import TextareaField from '@/components/widgets/molecules/TextareaField.vue';
 import MultiselectField from '@/components/widgets/molecules/MultiselectField.vue';
 
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import { useModals } from '@/plugins/core';
 import { NEW_TASK_KEY } from '@/constants/modalKeys';
 import { taskStatus } from '@/constants/taskStatus';
+import { useTodosStore } from '@/stores/todos';
 
 /* -- Plugins -- */
 
+const todosStore = useTodosStore();
 const modals = useModals();
 
 /* -- Data -- */
@@ -73,6 +75,24 @@ const statusList = Object.values(taskStatus).map((status) => ({
 /* -- Methods -- */
 
 const close = () => modals.hide(NEW_TASK_KEY);
+
+const resetData = () => {
+	form.title = undefined;
+	form.description = undefined;
+	form.status = undefined;
+};
+
+const createTodo = () => {
+	if (!(form.title && form.description && form.status)) return;
+	const requestBody = {
+		name: form.title,
+		description: form.description,
+		status: form.status.value,
+	};
+	todosStore.addTodo(requestBody).then(() => {
+		close();
+	});
+};
 </script>
 
 <style lang="scss" scoped>
@@ -109,3 +129,4 @@ const close = () => modals.hide(NEW_TASK_KEY);
 	}
 }
 </style>
+@/constants/taskStatus

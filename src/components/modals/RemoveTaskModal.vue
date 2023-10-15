@@ -10,7 +10,7 @@
 
 		<template #footer>
 			<div class="remove-task-modal__actions">
-				<BaseButton theme="danger" pill>Excluir</BaseButton>
+				<BaseButton theme="danger" pill @click="deleteTodo()">Excluir</BaseButton>
 				<BaseButton theme="gray" variant="text" pill @click="close()">Cancelar</BaseButton>
 			</div>
 		</template>
@@ -23,20 +23,30 @@ import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
 import { useModals } from '@/plugins/core';
 import { DELETE_TASK_KEY } from '@/constants/modalKeys';
+import { useTodosStore } from '@/stores/todos';
 
 /* -- Plugins -- */
 
+const todosStore = useTodosStore();
 const modals = useModals();
 
+/* -- Props -- */
+
 interface IProps {
-	id?: string;
+	id: string;
 }
 
-defineProps<IProps>();
+const props = defineProps<IProps>();
 
 /* -- Methods -- */
 
 const close = () => modals.hide(DELETE_TASK_KEY);
+
+const deleteTodo = () => {
+	todosStore.deleteTodo(props.id).then(() => {
+		close();
+	});
+};
 </script>
 
 <style lang="scss" scoped>
