@@ -1,4 +1,4 @@
-import { TodosServices } from '@/services';
+import { todosServices } from '@/services';
 import { defineStore } from 'pinia';
 import type { ITodo, ITodoBasic, ITodoId } from '@/interfaces';
 
@@ -13,7 +13,8 @@ export const useTodosStore = defineStore('todos', {
 	actions: {
 		getTodos(): Promise<ITodo[]> {
 			return new Promise((resolve, reject) => {
-				TodosServices.GET_TODOS()
+				todosServices
+					.GET_TODOS()
 					.then((todos) => {
 						this.todos = todos;
 						resolve(todos);
@@ -27,7 +28,8 @@ export const useTodosStore = defineStore('todos', {
 				if (storeTodo) {
 					resolve(storeTodo);
 				} else {
-					TodosServices.GET_TODO(id)
+					todosServices
+						.GET_TODO(id)
 						.then((todo) => {
 							resolve(todo);
 						})
@@ -37,7 +39,8 @@ export const useTodosStore = defineStore('todos', {
 		},
 		addTodo(body: ITodoBasic): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
-				TodosServices.CREATE_TODO(body)
+				todosServices
+					.CREATE_TODO(body)
 					.then((todo) => {
 						this.todos.push(todo);
 						resolve(todo);
@@ -47,7 +50,8 @@ export const useTodosStore = defineStore('todos', {
 		},
 		editTodo(id: string, body: ITodoBasic): Promise<ITodo> {
 			return new Promise((resolve, reject) => {
-				TodosServices.EDIT_TODO(id, body)
+				todosServices
+					.EDIT_TODO(id, body)
 					.then((todo) => {
 						const todoIndex = this.todos.findIndex((t) => t.id === id);
 						this.todos[todoIndex] = todo;
@@ -58,7 +62,8 @@ export const useTodosStore = defineStore('todos', {
 		},
 		deleteTodo(id: string): Promise<ITodoId> {
 			return new Promise((resolve, reject) => {
-				TodosServices.DELETE_TODO(id)
+				todosServices
+					.DELETE_TODO(id)
 					.then((deletedId) => {
 						this.todos = this.todos.filter((t) => t.id !== id);
 						resolve(deletedId);

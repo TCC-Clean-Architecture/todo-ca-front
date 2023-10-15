@@ -1,1 +1,1 @@
-export * as TodosServices from './modules/todosServices';
+export { todosServices } from './modules/todosServices';
