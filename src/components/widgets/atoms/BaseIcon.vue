@@ -9,7 +9,7 @@
 			...cssClasses,
 		}"
 		:disabled="disabled"
-		@click="onClick($event)"
+		@click.prevent="onClick($event)"
 	>
 		<transition name="scale-up" mode="out-in">
 			<BaseLoader v-if="loading" variant="primary" floating center />

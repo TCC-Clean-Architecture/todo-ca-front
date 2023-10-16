@@ -8,9 +8,16 @@
 			...cssClasses,
 		}"
 	>
+		<div v-if="hasLeadingIcon" class="input__leading-icon" aria-hidden="true">
+			<slot name="leading-icon"></slot>
+		</div>
 		<input
 			:id="name"
 			class="input__tag"
+			:style="{
+				'padding-inline-start': hasLeadingIcon ? '3rem' : undefined,
+				'padding-inline-end': hasTrailingIcon ? '3rem' : undefined,
+			}"
 			:value="modelValue"
 			:type="type"
 			:placeholder="checkPlaceholder ? placeholder : undefined"
@@ -24,10 +31,14 @@
 			@blur="onBlur($event)"
 			v-on="events"
 		/>
+		<div v-if="hasTrailingIcon" class="input__trailing-icon" aria-hidden="true">
+			<slot name="trailing-icon"></slot>
+		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
+import { computed, useSlots } from 'vue';
 import { useInput } from '@/composables/input';
 
 /* -- Props -- */
@@ -48,6 +59,20 @@ export interface InputProps {
 const props = withDefaults(defineProps<InputProps>(), {
 	type: 'text',
 	events: () => ({}),
+});
+
+/* -- Data -- */
+
+const slots = useSlots();
+
+/* -- Computeds -- */
+
+const hasLeadingIcon = computed(() => {
+	return slots['leading-icon'] || false;
+});
+
+const hasTrailingIcon = computed(() => {
+	return slots['trailing-icon'] || false;
 });
 
 /* -- Emits -- */
@@ -118,6 +143,29 @@ const { focus, cssClasses, checkPlaceholder, onInputChange, onFocus, onBlur } = 
 		&:focus-within {
 			border-color: var(--clr-danger);
 		}
+	}
+
+	%icon {
+		position: absolute;
+		top: 50%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		transform: translateY(-50%);
+
+		user-select: none;
+	}
+
+	&__leading-icon {
+		left: 0.5rem;
+		@extend %icon;
+	}
+
+	&__trailing-icon {
+		right: 0.5rem;
+		@extend %icon;
 	}
 
 	&.variant--dynamic {

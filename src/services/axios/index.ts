@@ -1,5 +1,7 @@
 import type { IResponse } from '@/interfaces';
 import axios, { type AxiosInstance, type AxiosError } from 'axios';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
 class Http {
 	public http: AxiosInstance;
@@ -21,7 +23,18 @@ class Http {
 	defineInterceptor() {
 		this.http.interceptors.response.use(
 			(response: IResponse) => response,
-			(error: AxiosError) => error,
+			(error: AxiosError) => {
+				const authStore = useAuthStore();
+				const router = useRouter();
+
+				if (error.request.status === 401) {
+					if (authStore.isAutenticated) {
+						authStore.doLogout();
+						router.push({ name: 'Login' });
+					}
+				}
+				return error;
+			},
 		);
 	}
 }

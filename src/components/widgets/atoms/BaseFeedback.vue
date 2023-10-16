@@ -21,6 +21,7 @@ withDefaults(defineProps<FeedbackProps>(), { color: '#686868', width: '0%' });
 	flex-direction: column;
 	gap: 0.25rem;
 
+	width: 100%;
 	margin-block-start: 0.375rem;
 
 	user-select: none;
@@ -34,8 +35,6 @@ withDefaults(defineProps<FeedbackProps>(), { color: '#686868', width: '0%' });
 		border-radius: 0.25rem;
 		overflow: hidden;
 
-		transition: width 150ms ease-in-out;
-
 		&::after {
 			content: '';
 			position: absolute;
@@ -44,6 +43,8 @@ withDefaults(defineProps<FeedbackProps>(), { color: '#686868', width: '0%' });
 			width: v-bind(width);
 
 			background-color: v-bind(color);
+
+			transition: width 150ms ease-in-out;
 		}
 	}
 
@@ -54,6 +55,8 @@ withDefaults(defineProps<FeedbackProps>(), { color: '#686868', width: '0%' });
 		font-weight: bold;
 
 		color: v-bind(color);
+
+		transition: color 150ms ease-in-out;
 	}
 }
 </style>

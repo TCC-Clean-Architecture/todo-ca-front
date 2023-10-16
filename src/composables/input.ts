@@ -21,7 +21,8 @@ export const useInput = (props: any, emit: any) => {
 	});
 
 	const checkPlaceholder = computed(() => {
-		if (focus.value && !props.modelValue && props.variant === 'dynamic') return props.placeholder;
+		if (props.variant !== 'dynamic') return props.placeholder;
+		if (focus.value && !props.modelValue) return props.placeholder;
 		return undefined;
 	});
 
