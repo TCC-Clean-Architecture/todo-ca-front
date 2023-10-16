@@ -1,4 +1,6 @@
 import { type RouteRecordRaw } from 'vue-router';
+import { registerRoutes } from './register';
+import { loginRoutes } from './login';
 import { listsRoutes } from './lists';
 
 const auxRoutes: RouteRecordRaw[] = [
@@ -8,6 +10,4 @@ const auxRoutes: RouteRecordRaw[] = [
 	},
 ];
 
-const constantRoutes: RouteRecordRaw[] = [];
-
-export default [...auxRoutes, ...constantRoutes, listsRoutes];
+export default [...auxRoutes, registerRoutes, loginRoutes, listsRoutes];

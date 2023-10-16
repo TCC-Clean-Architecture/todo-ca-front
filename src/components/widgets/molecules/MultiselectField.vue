@@ -1,24 +1,8 @@
 <template>
-	<BaseField
-		:name="name"
-		:label="label"
-		:variant="variant"
-		:invalid="invalid"
-		:active="!!modelValue"
-	>
+	<BaseField v-bind="$props" :active="!!modelValue">
 		<BaseMultiselect
 			:id="name"
-			:name="name"
-			:model-value="modelValue"
-			:placeholder="placeholder"
-			:open-direction="openDirection"
-			:options="options"
-			:variant="variant"
-			:loading="loading"
-			:multiple="multiple"
-			:disabled="disabled"
-			:size="size"
-			:selectionTitle="selectionTitle"
+			v-bind="$props"
 			@update:model-value="$emit('update:modelValue', $event)"
 		/>
 	</BaseField>
@@ -30,9 +14,13 @@ import BaseMultiselect, {
 	type MultiselectProps,
 } from '@/components/widgets/atoms/BaseMultiselect.vue';
 
+/* -- Props -- */
+
 interface IProps extends FieldProps, MultiselectProps {}
 
 defineProps<IProps>();
+
+/* -- Emits -- */
 
 defineEmits<{
 	(e: 'update:modelValue', value: unknown): void;
