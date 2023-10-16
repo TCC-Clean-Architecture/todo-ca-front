@@ -159,12 +159,12 @@ const { focus, cssClasses, checkPlaceholder, onInputChange, onFocus, onBlur } = 
 	}
 
 	&__leading-icon {
-		left: 1rem;
+		left: 0.5rem;
 		@extend %icon;
 	}
 
 	&__trailing-icon {
-		right: 1rem;
+		right: 0.5rem;
 		@extend %icon;
 	}
 

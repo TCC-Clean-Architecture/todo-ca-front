@@ -11,7 +11,7 @@ export const registerRoutes: RouteRecordRaw = {
 		{
 			path: 'account',
 			name: RoutesNames.registerAccount,
-			component: () => import('@/views/Register/AccountView.vue'),
+			component: () => import('@/views/Register/RegisterAccountView.vue'),
 			meta: { requiresAuth: false },
 		},
 		{
@@ -21,7 +21,7 @@ export const registerRoutes: RouteRecordRaw = {
 				if (to.query.check === 'true') return next();
 				else next('/login');
 			},
-			component: () => import('@/views/Register/ConfirmView.vue'),
+			component: () => import('@/views/Register/RegisterConfirmView.vue'),
 			meta: { requiresAuth: false },
 		},
 	],

@@ -36,6 +36,8 @@ import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
 import { ref, reactive } from 'vue';
 
+/* -- Data -- */
+
 interface IForm {
 	email: string | undefined;
 	password: string | undefined;
@@ -55,6 +57,8 @@ type ErrorsKeys = keyof typeof errors;
 const error = ref<ErrorsKeys>();
 
 const loading = ref<boolean>(false);
+
+/* -- Methods -- */
 
 const doLogin = () => {
 	if (!form.email) {

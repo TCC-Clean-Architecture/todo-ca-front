@@ -1,7 +1,7 @@
 <template>
 	<BaseInput
 		class="password__input"
-		v-bind="props"
+		v-bind="$props"
 		:type="inputType"
 		@update:model-value="$emit('update:modelValue', $event)"
 	>
@@ -23,9 +23,11 @@ import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
 import { ref, computed } from 'vue';
 
+export interface PasswordProps extends Omit<InputProps, 'type'> {}
+
 /* -- Props -- */
 
-const props = defineProps<InputProps>();
+defineProps<PasswordProps>();
 
 /* -- Emits -- */
 

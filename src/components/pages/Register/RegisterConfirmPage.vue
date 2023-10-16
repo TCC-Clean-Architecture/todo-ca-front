@@ -1,15 +1,15 @@
 <template>
 	<div class="register__card">
 		<Logo2DO4U class="register__logo" />
-		<!-- <IconCheck class="register__check" color="#5DC90A" filled /> -->
+		<IconCheck class="register__check" color="#5DC90A" filled />
 		<p class="register__description">Cadastro realizado com sucesso!</p>
-		<RouterLink to="/login" class="register__go-login"> Voltar para o login </RouterLink>
+		<RouterLink to="/login" class="register__go-login"> &lt; Voltar para o login </RouterLink>
 	</div>
 </template>
 
 <script setup lang="ts">
 import Logo2DO4U from '@/components/icons/Logo2DO4U.vue';
-// import IconCheck from '@/components/icons/IconCheck.vue';
+import IconCheck from '@/components/icons/IconCheck.vue';
 </script>
 
 <style lang="scss" scoped>
