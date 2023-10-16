@@ -64,7 +64,16 @@ import PasswordField from '@/components/widgets/molecules/PasswordField.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
 import { ref, reactive, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useRoutesNames } from '@/plugins/routesNames';
+import { useAuthStore } from '@/stores/auth';
 import { useCheckPassword } from '@/composables/checkPassword';
+
+/* -- Plugins -- */
+
+const router = useRouter();
+const routesNames = useRoutesNames();
+const authStore = useAuthStore();
 
 /* -- Data -- */
 
@@ -125,6 +134,18 @@ const doRegister = () => {
 		email: form.email!,
 		password: form.password!,
 	};
+
+	authStore
+		.registerUser(body)
+		.then(() => {
+			router.push({ name: routesNames.registerConfirm, query: { check: 'true' } });
+		})
+		.catch(() => {
+			error.value = 'registerFailed';
+		})
+		.finally(() => {
+			loading.value = false;
+		});
 };
 </script>
 

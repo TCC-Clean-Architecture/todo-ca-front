@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
 import routes from './routes';
 
@@ -10,7 +11,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	if (to.meta.requiresAuth) {
+	const authStore = useAuthStore();
+
+	if (to.meta.requiresAuth && !authStore.isAutenticated) {
 		next('login');
 	} else next();
 });

@@ -35,6 +35,15 @@ import BasePassword from '@/components/widgets/atoms/BasePassword.vue';
 import BaseButton from '@/components/widgets/atoms/BaseButton.vue';
 
 import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useRoutesNames } from '@/plugins/routesNames';
+import { useAuthStore } from '@/stores/auth';
+
+/* -- Plugins -- */
+
+const router = useRouter();
+const routesNames = useRoutesNames();
+const authStore = useAuthStore();
 
 /* -- Data -- */
 
@@ -77,6 +86,18 @@ const doLogin = () => {
 		email: form.email,
 		password: form.password,
 	};
+
+	authStore
+		.doLogin(body)
+		.then(() => {
+			router.push({ name: routesNames.lists });
+		})
+		.catch(() => {
+			error.value = 'loginFailed';
+		})
+		.finally(() => {
+			loading.value = false;
+		});
 };
 </script>
 
