@@ -3,6 +3,8 @@
 		<BaseMultiselect
 			:id="name"
 			v-bind="$props"
+			:track-by="undefined"
+			:label="undefined"
 			@update:model-value="$emit('update:modelValue', $event)"
 		/>
 	</BaseField>
